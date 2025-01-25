@@ -1,20 +1,8 @@
 <template>
   <v-container>
-    <v-file-input
-      label="Upload CSV"
-      accept=".csv"
-			v-model="fileData"
-      @change="handleFileUpload"
-    ></v-file-input>
-    <v-data-table
-      v-if="headers.length > 0"
-      :headers="headers"
-      :items="pagedRows"
-      :items-per-page="20"
-      class="elevation-1"
-      v-model:page="page"
-      :footer-props="{ showFirstLastPage: true }"
-    >
+    <v-file-input label="Upload CSV" accept=".csv" v-model="fileData" @change="handleFileUpload"></v-file-input>
+    <v-data-table v-if="headers.length > 0" :headers="headers" :items="pagedRows" :items-per-page="20"
+      class="elevation-1" v-model:page="page" :footer-props="{ showFirstLastPage: true }">
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>CSV Data Table</v-toolbar-title>
@@ -36,8 +24,8 @@ const page = ref(1); // 現在のページ番号
 
 // ファイルアップロード時の処理
 const handleFileUpload = () => {
-	console.log(fileData.value)
-	Papa.parse(fileData.value, {
+  console.log(fileData.value)
+  Papa.parse(fileData.value, {
     header: true,
     skipEmptyLines: true,
     complete: (result) => {
@@ -54,6 +42,7 @@ const handleFileUpload = () => {
 const pagedRows = computed(() => {
   const start = (page.value - 1) * 20;
   const end = page.value * 20;
+  console.log(end)
   return rows.value.slice(start, end);
 });
 </script>
